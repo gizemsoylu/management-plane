@@ -1,75 +1,58 @@
 <mvc:View
     controllerName="com.ndbs.managementplaneui.controller.KPIs"
+    xmlns:smartfilterbar="sap.ui.comp.smartfilterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
     displayBlock="true"
     xmlns="sap.m"
-    xmlns:f="sap.f"
-    xmlns:card="sap.f.cards"
-    xmlns:core="sap.ui.core"
-    height="100%"
 >
     <Page
-        id="page"
-        title="{i18n>title}"
+        id="pageKPIResults"
+        title="{i18n>titleKPIResults}"
+        showNavButton="true"
+        navButtonPress="onNavToHomepage"
     >
         <FlexBox
             justifyContent="Center"
             alignItems="Center"
         >
             <VBox width="95%">
-                <FlexBox
-                    id="fbKPIs"
-                    justifyContent="Start"
-                    wrap="Wrap"
-                    items="{path:'/KPIs', suspended:true}"
-                >
-                    <HBox>
-                        <f:Card
-                            class="sapUiSmallMargin"
-                            width="380px"
+                <Panel class="sapUiSmallMarginTop">
+                    <content>
+                        <smartfilterbar:SmartFilterBar
+                            id="sfbKPIs"
+                            entitySet="KPIs"
+                        />
+                        <smartTable:SmartTable
+                            id="stKPIs"
+                            entitySet="KPIs"
+                            smartFilterId="sfbKPIs"
+                            showPasteButton="false"
+                            showTablePersonalisation="false"
+                            showVariantManagement="false"
+                            showRowCount="false"
+                            enableAutoBinding="true"
+                            class="sapUiResponsiveContentPadding"
+                            editTogglable="false"
+                            enableExport="false"
+                            showFullScreenButton="false"
+                            enableCopy="false"
+                            beforeRebindTable="onBeforeRebindTable"
+                            useVariantManagement="false"
+                            tableType="Table"
+                            requestAtLeastFields="subchapterID"
                         >
-                            <f:header>
-                                <card:Header
-                                    title="{name}"
-                                    iconSrc="{sapIcon}"
+                            <Table>
+                                <ColumnListItem
+                                    type="Navigation"
+                                    press="onItemPressed"
                                 />
-                            </f:header>
-                            <f:content>
-                                <VBox
-                                    height="110px"
-                                    width="380px"
-                                    class="sapUiSmallMargin"
-                                    justifyContent="SpaceAround"
-                                    fitContainer="false"
-                                    wrap="Wrap"
-                                >
-                                    <HBox justifyContent="SpaceBetween">
-                                        <Text text="{description}" />
-                                    </HBox>
-                                    <HBox
-                                        renderType="Bare"
-                                        justifyContent="End"
-                                    >
-                                        <Button
-                                            id="btnCard"
-                                            text="Open"
-                                            press="onCardPress"
-                                            type="Emphasized"
-                                            class="sapUiTinyMarginBegin"
-                                        >
-                                            <customData>
-                                                <core:CustomData
-                                                    key="sectionID"
-                                                    value="{ID}"
-                                                />
-                                            </customData>
-                                        </Button>
-                                    </HBox>
-                                </VBox>
-                            </f:content>
-                        </f:Card>
-                    </HBox>
-                </FlexBox>
+                            </Table>
+                        </smartTable:SmartTable>
+                    </content>
+                </Panel>
             </VBox>
         </FlexBox>
     </Page>

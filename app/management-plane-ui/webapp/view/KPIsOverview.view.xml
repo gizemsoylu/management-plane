@@ -1,0 +1,85 @@
+<mvc:View
+    controllerName="com.ndbs.managementplaneui.controller.KPIsOverview"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:card="sap.f.cards"
+    xmlns:core="sap.ui.core"
+    height="100%"
+>
+    <Page
+        id="page"
+        title="{i18n>title}"
+        showNavButton="true"
+        navButtonPress="onNavToHomepage"
+    >
+        <FlexBox
+            justifyContent="Center"
+            alignItems="Center"
+        >
+            <VBox width="95%">
+                <FlexBox
+                    id="fbKPIsOverview"
+                    justifyContent="Start"
+                    wrap="Wrap"
+                    items="{path:'/KPIs', suspended:true}"
+                >
+                    <HBox>
+                        <f:Card
+                            class="sapUiSmallMargin"
+                            width="380px"
+                        >
+                            <f:header>
+                                <card:Header
+                                    title="{chapterID}-{chapterName}"
+                                    iconSrc="{sapIcon}"
+                                    subtitle="{subDescription}"
+                                    iconBackgroundColor="Random"
+                                    iconDisplayShape="Circle"
+                                />
+                            </f:header>
+                            <f:content>
+                                <VBox
+                                    height="110px"
+                                    width="380px"
+                                    class="sapUiSmallMargin"
+                                    justifyContent="SpaceAround"
+                                    fitContainer="false"
+                                    wrap="Wrap"
+                                >
+                                    <HBox justifyContent="SpaceBetween">
+                                        <Text text="{subDescription}" />
+                                    </HBox>
+                                    <HBox
+                                        renderType="Bare"
+                                        justifyContent="End"
+                                    >
+                                        <Button
+                                            id="btnCard"
+                                            text="Open"
+                                            press="onCardPress"
+                                            type="Emphasized"
+                                            class="sapUiTinyMarginBegin"
+                                        >
+                                            <customData>
+                                                <core:CustomData
+                                                    key="sectionID"
+                                                    value="{sectionID}"
+                                                />
+                                                <core:CustomData
+                                                    key="kpiID"
+                                                    value="{ID}"
+                                                />
+                                            </customData>
+                                        </Button>
+                                    </HBox>
+                                </VBox>
+                            </f:content>
+                        </f:Card>
+                    </HBox>
+                </FlexBox>
+            </VBox>
+        </FlexBox>
+    </Page>
+</mvc:View>

@@ -1,3 +1,5 @@
+using {managed} from '@sap/cds/common';
+
 entity Sections {
     key ID      : UUID;
         type    : String;
@@ -7,36 +9,33 @@ entity Sections {
                       on toKPIs.sectionID = $self.ID;
 }
 
-entity KPIs {
-    key ID          : UUID;
-        sectionID  : UUID;
-        name        : String;
-        title       : String;
-        description : String;
-        details     : Association to many KPIDetails
-                          on details.KPI_ID = $self.ID;
-}
-
-entity KPIDetails {
+entity KPIs : managed {
     key ID             : UUID;
-        KPI_ID         : UUID;
-        name           : String;
-        status         : String;
-        paragraph      : String;
+    key paragraph      : String;
+        sectionID      : UUID;
+        chapterID       : String;
+        chapterName    : String;
+        subchapterID   : String;
+        subchapterName : String;
+        subDescription : String;
+        state          : String;
+        AIStatus       : String;
+        userStatus     : String;
+        totalStatus    : String;
         content        : String;
         reportDate     : DateTime;
         documentNumber : Integer;
         documents      : Association to many Documents
-                             on documents.KPIDetailsID = $self.ID;
+                             on documents.kpiID = $self.ID;
 }
 
 entity Documents {
-    key ID            : UUID;
-        KPIDetailsID : UUID;
-        title         : String;
-        textLine      : String;
-        page          : Integer;
-        type          : String;
-        AIMatch       : Integer;
-        categorie     : String;
+    key ID        : UUID;
+        kpiID     : UUID;
+        title     : String;
+        textLine  : String;
+        page      : Integer;
+        type      : String;
+        AIMatch   : Integer;
+        categorie : String;
 }

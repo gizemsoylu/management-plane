@@ -1,7 +1,19 @@
-<mvc:View controllerName="com.ndbs.managementplaneui.controller.App"
+<mvc:View
+    controllerName="com.ndbs.managementplaneui.controller.App"
     xmlns:html="http://www.w3.org/1999/xhtml"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m">
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns:f="sap.f"
+    xmlns="sap.m"
+>
     <App id="app">
+        <f:FlexibleColumnLayout
+            id="flexibleApp"
+            stateChange="onStateChanged"
+            restoreFocusOnBackNavigation="true"
+            layout="{flexibleColumnLayout>/layout}"
+            backgroundDesign="Translucent"
+            autoFocus="true"
+        />
     </App>
 </mvc:View>

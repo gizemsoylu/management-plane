@@ -10,7 +10,7 @@ export default class KPIDetails extends BaseController {
     /* ======================================================================================================================= */
 
     public onInit() {
-        this.getRouter().getRoute("RouteKPIDetail")!.attachMatched(this.onObjectMatched, this);
+        this.getRouter().getRoute("RouteKPIDetails")!.attachMatched(this.onObjectMatched, this);
     }
 
     /* ======================================================================================================================= */
@@ -26,7 +26,7 @@ export default class KPIDetails extends BaseController {
     /* ======================================================================================================================= */
 
     private onObjectMatched(event: Route$PatternMatchedEvent) {
-
+let x="";
     }
 }
 

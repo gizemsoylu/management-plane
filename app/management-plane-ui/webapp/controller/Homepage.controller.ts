@@ -23,10 +23,10 @@ export default class Homepage extends BaseController {
     /* Event Handlers                                                                                                          */
     /* ======================================================================================================================= */
 
-    public onNavToKPIs(event: GenericTile$PressEvent) {
+    public onNavToKPIsOverview(event: GenericTile$PressEvent) {
         const sectionID=((event.getSource().getBindingContext() as Context).getObject() as { ID: string }).ID;
 
-        this.getRouter().navTo("RouteKPIs", {
+        this.getRouter().navTo("RouteKPIsOverview", {
             sectionID: sectionID
         });
     }

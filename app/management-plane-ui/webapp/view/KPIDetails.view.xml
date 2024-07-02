@@ -1,7 +1,262 @@
-<mvc:View controllerName="com.ndbs.managementplaneui.controller.KPIDetails"
-    xmlns:html="http://www.w3.org/1999/xhtml"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m">
-    <App id="app">
-    </App>
+<mvc:View
+    controllerName="com.ndbs.managementplaneui.controller.KPIDetails"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.uxap"
+    xmlns:m="sap.m"
+    xmlns:f="sap.f"
+    xmlns:forms="sap.ui.layout.form"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:core="sap.ui.core"
+    displayBlock="true"
+    height="100%"
+>
+    <m:Page showHeader="false">
+        <ObjectPageLayout
+            id="oplKpi"
+            showTitleInHeaderContent="true"
+            upperCaseAnchorBar="false"
+        >
+            <headerTitle>
+                <ObjectPageDynamicHeaderTitle>
+                    <expandedHeading>
+                        <m:Title
+                            text="{title}"
+                            wrapping="true"
+                        />
+                    </expandedHeading>
+                    <snappedHeading>
+                        <m:HBox>
+                            <m:VBox>
+                                <m:Title
+                                    text="{title}"
+                                    wrapping="true"
+                                />
+                                <m:Label text="{name}" />
+                            </m:VBox>
+                        </m:HBox>
+                    </snappedHeading>
+
+                    <expandedContent>
+                        <m:Label text="{description}" />
+                    </expandedContent>
+                    <actions>
+                        <m:Button
+                            text="{i18n>EditBtn}"
+                            type="Emphasized"
+                        />
+                        <m:Button
+                            text="{i18n>DeleteBtn}"
+                            type="Default"
+                        />
+                        <m:Button text="{i18n>RegenerateReportBtn}" />
+                        <m:OverflowToolbarButton
+                            icon="sap-icon://action"
+                            type="Transparent"
+                            text="Share"
+                            tooltip="action"
+                        />
+                    </actions>
+                </ObjectPageDynamicHeaderTitle>
+            </headerTitle>
+
+            <headerContent>
+                <m:FlexBox
+                    wrap="Wrap"
+                    fitContainer="true"
+                >
+                    <m:VBox class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <m:Avatar
+                            src="{path:'name', formatter:'.formatter.formatIcons'}"
+                            backgroundColor="{path:'name', formatter:'.formatter.formatIconColor'}"
+                            displayShape="Square"
+                            displaySize="L"
+                        />
+                    </m:VBox>
+                    <m:VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+                        <m:HBox
+                            class="sapUiTinyMarginBottom"
+                            renderType="Bare"
+                        >
+                            <m:Label
+                                text="{i18n>documentNumber}"
+                                class="sapUiTinyMarginEnd"
+                            />
+                            <m:Text text="{documentNumber}" />
+                        </m:HBox>
+                        <m:HBox
+                            class="sapUiTinyMarginBottom"
+                            renderType="Bare"
+                        >
+                            <m:Label
+                                text="{i18n>lastUpdate}"
+                                class="sapUiTinyMarginEnd"
+                            />
+                            <m:Text
+                                text="{
+				                path: 'reportDate',
+				                type: 'sap.ui.model.type.Date',
+				                formatOptions: {pattern: 'yyyy/MM/dd'}}"
+                            />
+                        </m:HBox>
+                        <m:HBox>
+                            <m:Label
+                                text="{i18n>lastChangedBy}"
+                                class="sapUiTinyMarginEnd"
+                            />
+                            <m:Link
+                                text="{modifiedBy}"
+                                press="onExternalApplicationLinkPress"
+                            />
+                        </m:HBox>
+                    </m:VBox>
+                    <m:VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+                        <m:Title
+                            text="{i18n>reportStatus}"
+                            class="sapUiTinyMarginBottom"
+                        />
+                        <m:ObjectStatus
+                            text="Successfully"
+                            state="Success"
+                            class="sapMObjectStatusLarge"
+                        />
+                    </m:VBox>
+                    <m:VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+                        <m:Title
+                            text="{i18n>exportOfReport}"
+                            class="sapUiTinyMarginBottom"
+                        />
+                        <m:ObjectStatus
+                            text="{i18n>toBeSelected}"
+                            state="Error"
+                            class="sapMObjectStatusLarge"
+                        />
+                    </m:VBox>
+                </m:FlexBox>
+            </headerContent>
+            <sections>
+                <ObjectPageSection
+                    titleUppercase="false"
+                    id="generatedReportSection"
+                >
+                    <subSections>
+                        <ObjectPageSubSection
+                            title="{i18n>generatedReports}"
+                            showTitle="false"
+                        >
+                            <blocks>
+                                <m:Panel headerText="{i18n>reportOfTheKPI}">
+                                    <m:HBox direction="Column">
+                                        <m:Label text="{title}" />
+                                        <m:Text text="{content/}" />
+                                    </m:HBox>
+                                </m:Panel>
+                            </blocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
+                <ObjectPageSection
+                    titleUppercase="false"
+                    id="AIAnalyzedDocumentsSection"
+                    title="Order Details"
+                >
+                    <subSections>
+                        <ObjectPageSubSection
+                            title="{i18n>AIAnalyzedDocuments}"
+                            showTitle="false"
+                        >
+                            <blocks>
+                                <smartTable:SmartTable
+                                    id="stDocuments"
+                                    smartFilterId="sfbDocuments"
+                                    header="{i18n>stDocuments}"
+                                    tableType="ResponsiveTable"
+                                    entitySet="VKPIs"
+                                    enableAutoBinding="false"
+                                    class="sapUiResponsiveContentPadding"
+                                    showPasteButton="true"
+                                    showFullScreenButton="true"
+                                    beforeRebindTable="onBeforeRebindTable"
+                                >
+                                    <m:Table
+                                        id="idDocumentTable"
+                                        growing="true"
+                                        growingThreshold="20"
+                                        growingScrollToLoad="true"
+                                        sticky="ColumnHeaders"
+                                    >
+                                        <m:columns>
+                                            <m:Column>
+                                                <m:customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "page", "leadingProperty": "page,textLine", "columnIndex": 99}'
+                                                    />
+                                                </m:customData>
+                                                <m:Text
+                                                    text="{i18n>textLineAndPage}"
+                                                />
+                                            </m:Column>
+                                            <m:Column>
+                                                <m:customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "AIMatch", "leadingProperty": "AIMatch", "columnIndex": 3}'
+                                                    />
+                                                </m:customData>
+                                                <m:Text text="{i18n>AIMatch}" />
+                                            </m:Column>
+                                        </m:columns>
+                                        <m:items>
+                                            <m:ColumnListItem
+                                                type="Navigation"
+                                                press="onNavToDetails"
+                                                highlight="{path:'AIMatch', formatter:'.formatter.formatRowHighlight'}"
+                                            >
+                                                <m:ObjectStatus
+                                                    text="{parts:['page','textLine'], formatter:'.formatter.formatPageTextLine'}"
+                                                    state="Information"
+                                                    class="sapMObjectStatusMedium"
+                                                />
+                                                <m:ObjectStatus
+                                                    text="{AIMatch}"
+                                                    state="{path:'AIMatch', formatter:'.formatter.formatRowHighlight'}"
+                                                    class="sapMObjectStatusMedium"
+                                                />
+                                            </m:ColumnListItem>
+                                        </m:items>
+                                    </m:Table>
+                                    <smartTable:customToolbar>
+                                        <m:OverflowToolbar design="Transparent">
+                                            <m:ToolbarSpacer />
+                                            <m:Input
+                                                width="200px"
+                                                placeholder="Search"
+                                                valueHelpIconSrc="sap-icon://search"
+                                                showValueHelp="true"
+                                            />
+                                            <m:Button
+                                                id="createButton"
+                                                text="{i18n>CreateBtn}"
+                                                type="Default"
+                                                press="onPressCreate"
+                                                enabled="{= ${viewModel>/bHasSelection}}"
+                                            />
+                                            <m:Button
+                                                id="deleteButton"
+                                                text="{i18n>DeleteBtn}"
+                                                type="Transparent"
+                                                press="onPressDelete"
+                                                enabled="{= ${viewModel>/bHasSelection}}"
+                                            />
+                                        </m:OverflowToolbar>
+                                    </smartTable:customToolbar>
+                                </smartTable:SmartTable>
+                            </blocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
+            </sections>
+        </ObjectPageLayout>
+    </m:Page>
 </mvc:View>

@@ -20,7 +20,7 @@
                 id="genericTiles"
                 header=" {name}"
                 class="sapUiLargeMarginBegin sapUiLargeMarginBottom sapUiLargeMarginTop sapUiLargeMarginEnd"
-                press="onNavToKPIs"
+                press="onNavToKPIsOverview"
             >
                 <TileContent footer="{type}">
                     <FlexBox direction="Column">
