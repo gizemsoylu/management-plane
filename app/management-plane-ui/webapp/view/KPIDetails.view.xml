@@ -13,7 +13,7 @@
 >
     <m:Page showHeader="false">
         <ObjectPageLayout
-            id="oplKpi"
+            id="oplKpiDetails"
             showTitleInHeaderContent="true"
             upperCaseAnchorBar="false"
         >

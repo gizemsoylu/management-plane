@@ -26,7 +26,7 @@ export default class KPIDetails extends BaseController {
     /* ======================================================================================================================= */
 
     private onObjectMatched(event: Route$PatternMatchedEvent) {
-let x="";
+
     }
 }
 
