@@ -1,0 +1,60 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:card="sap.f.cards"
+    xmlns:core="sap.ui.core"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+>
+    <FlexBox
+        justifyContent="Start"
+        wrap="Wrap"
+    >
+        <f:Card
+            class="sapUiSmallMargin"
+            width="auto"
+            height="auto"
+        >
+            <f:content>
+                <smartTable:SmartTable
+                    id="stKPIs"
+                    tableType="ResponsiveTable"
+                    entitySet="VKPIs"
+                    enableAutoBinding="true"
+                    class="sapUiResponsiveContentPadding"
+                    enableExport="false"
+                    showTablePersonalisation="false"
+                    beforeRebindTable="onBeforeRebindTable"
+                >
+                    <Table
+                        id="tableKPIsOverview"
+                        growing="true"
+                        growingThreshold="5"
+                    >
+                        <columns>
+                            <Column>
+                                <customData>
+                                    <core:CustomData
+                                        key="p13nData"
+                                        value='\{"columnKey": "kpiState", "leadingProperty": "kpiState", "columnIndex": 99}'
+                                    />
+                                </customData>
+                                <Text text="{i18n>State}" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <ObjectStatus
+                                        text="{kpiState}"
+                                        state="{path:'kpiState', formatter:'.formatter.formatRowHighlight'}"
+                                        class="sapMObjectStatusMedium"
+                                    />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </smartTable:SmartTable>
+            </f:content>
+        </f:Card>
+    </FlexBox>
+</core:FragmentDefinition>

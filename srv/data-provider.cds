@@ -14,22 +14,53 @@ service ManagementPlane {
             *,
             (
                 subchapterID || ' para. ' || paragraph
-            )   as subChapter : String,
+            )     as subChapter : String,
             case
                 when
-                    chapterID = 'E'
+                    chapterID like 'E%'
                 then
                     'sap-icon://e-care'
                 when
-                    chapterID = 'S'
+                    chapterID like 'S%'
                 then
                     'sap-icon://jam'
                 when
-                    chapterID = 'G'
+                    chapterID like 'G%'
                 then
                     'sap-icon://official-service'
                 else
                     'sap-icon://e-care'
-            end as sapIcon    : String
-        };
+            end   as sapIcon    : String,
+            (
+                    select count(
+                        distinct state
+                    ) from DBKPIs
+                ) as stateCount : Integer
+
+            };
+
+    entity VKPIs as
+        select from DBSections as sec
+        left outer join DBKPIs as kpi
+            on sec.ID = kpi.sectionID
+        {
+            
+            key kpi.ID      as kpiID : UUID,
+            kpi.sectionID   as sectionID: UUID,
+            sec.type        as sectionType :String,
+            sec.name        as sectionName :String,
+            kpi.chapterID   as kpiChapterID :String,
+            kpi.chapterName as kpiChapterName:String,
+            kpi.state       as kpiState:String,
+            kpi.reportDate as kpiReportDate:Date
+        }
+
+        entity VKPIStateCount as select  from VKPIs as kpi{
+        key kpi.sectionID,
+            kpi.sectionType,
+            kpi.kpiState,
+            count(kpi.kpiState) as kpiStateCount:Integer
+             
+        }group by kpi.sectionType,kpi.kpiState,kpi.sectionID ;
+
 }

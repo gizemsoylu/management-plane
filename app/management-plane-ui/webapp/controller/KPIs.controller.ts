@@ -29,8 +29,10 @@ export default class KPIs extends BaseController {
     /* Event Handlers                                                                                                          */
     /* ======================================================================================================================= */
 
-    public onNavToHomepage(): void {
-        this.getRouter().navTo("RouteHomepage");
+    public onNavKPIsOverview(): void {
+        this.getRouter().navTo("RouteKPIsOverview", {
+            sectionID: this.sectionID
+        });
     }
 
     public onBeforeRebindTable(event: SmartTable$BeforeRebindTableEvent) {
@@ -59,7 +61,7 @@ export default class KPIs extends BaseController {
         this.kpiID = (event.getParameters().arguments as { kpiID: string }).kpiID;
         const smartTable = this.byId("stKPIs") as SmartTable;
 
-        if(smartTable.isInitialised()){
+        if (smartTable.isInitialised()) {
             smartTable.rebindTable(true);
         }
     }

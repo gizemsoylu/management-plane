@@ -12,7 +12,7 @@
         id="pageKPIResults"
         title="{i18n>titleKPIResults}"
         showNavButton="true"
-        navButtonPress="onNavToHomepage"
+        navButtonPress="onNavKPIsOverview"
     >
         <FlexBox
             justifyContent="Center"

@@ -1,0 +1,65 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:card="sap.f.cards"
+    xmlns:core="sap.ui.core"
+>
+    <FlexBox
+        id="fbKPIsDetail"
+        justifyContent="Start"
+        wrap="Wrap"
+        items="{path:'/KPIs'}"
+    >
+        <f:Card
+            class="sapUiSmallMargin"
+            width="300px"
+        >
+            <f:header>
+                <card:Header
+                    title="{chapterID}-{chapterName}"
+                    iconSrc="{sapIcon}"
+                    subtitle="{subDescription}"
+                    iconBackgroundColor="Random"
+                    iconDisplayShape="Circle"
+                />
+            </f:header>
+            <f:content>
+                <VBox
+                    height="110px"
+                    width="380px"
+                    class="sapUiSmallMargin"
+                    justifyContent="SpaceAround"
+                    fitContainer="false"
+                    wrap="Wrap"
+                >
+                    <HBox justifyContent="SpaceBetween">
+                        <Text text="{subDescription}" />
+                    </HBox>
+                    <HBox
+                        renderType="Bare"
+                        justifyContent="End"
+                    >
+                        <Button
+                            id="btnCard"
+                            text="Open"
+                            press="onCardPress"
+                            type="Emphasized"
+                            class="sapUiTinyMarginBegin"
+                        >
+                            <customData>
+                                <core:CustomData
+                                    key="sectionID"
+                                    value="{sectionID}"
+                                />
+                                <core:CustomData
+                                    key="kpiID"
+                                    value="{ID}"
+                                />
+                            </customData>
+                        </Button>
+                    </HBox>
+                </VBox>
+            </f:content>
+        </f:Card>
+    </FlexBox>
+</core:FragmentDefinition>

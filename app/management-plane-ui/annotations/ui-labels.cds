@@ -19,3 +19,9 @@ annotate service.KPIs with {
     userStatus     @Common.Label: '{i18n>userStatus}';
     totalStatus    @Common.Label: '{i18n>totalStatus}';
 }
+annotate service.VKPIs with {
+   
+    kpiReportDate    @Common.Label: '{i18n>kpiReportDate}';
+    kpiChapterID     @Common.Label: '{i18n>kpiChapterID}';
+}
+

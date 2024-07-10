@@ -6,6 +6,7 @@
     xmlns:f="sap.f"
     xmlns:card="sap.f.cards"
     xmlns:core="sap.ui.core"
+    xmlns:smartChart="sap.ui.comp.smartchart"
     height="100%"
 >
     <Page
@@ -14,72 +15,44 @@
         showNavButton="true"
         navButtonPress="onNavToHomepage"
     >
-        <FlexBox
-            justifyContent="Center"
-            alignItems="Center"
-        >
-            <VBox width="95%">
-                <FlexBox
-                    id="fbKPIsOverview"
-                    justifyContent="Start"
-                    wrap="Wrap"
-                    items="{path:'/KPIs', suspended:true}"
-                >
-                    <HBox>
-                        <f:Card
-                            class="sapUiSmallMargin"
-                            width="380px"
-                        >
-                            <f:header>
-                                <card:Header
-                                    title="{chapterID}-{chapterName}"
-                                    iconSrc="{sapIcon}"
-                                    subtitle="{subDescription}"
-                                    iconBackgroundColor="Random"
-                                    iconDisplayShape="Circle"
-                                />
-                            </f:header>
-                            <f:content>
-                                <VBox
-                                    height="110px"
-                                    width="380px"
-                                    class="sapUiSmallMargin"
-                                    justifyContent="SpaceAround"
-                                    fitContainer="false"
-                                    wrap="Wrap"
-                                >
-                                    <HBox justifyContent="SpaceBetween">
-                                        <Text text="{subDescription}" />
-                                    </HBox>
-                                    <HBox
-                                        renderType="Bare"
-                                        justifyContent="End"
-                                    >
-                                        <Button
-                                            id="btnCard"
-                                            text="Open"
-                                            press="onCardPress"
-                                            type="Emphasized"
-                                            class="sapUiTinyMarginBegin"
-                                        >
-                                            <customData>
-                                                <core:CustomData
-                                                    key="sectionID"
-                                                    value="{sectionID}"
-                                                />
-                                                <core:CustomData
-                                                    key="kpiID"
-                                                    value="{ID}"
-                                                />
-                                            </customData>
-                                        </Button>
-                                    </HBox>
-                                </VBox>
-                            </f:content>
-                        </f:Card>
-                    </HBox>
-                </FlexBox>
-            </VBox>
-        </FlexBox>
+        <f:GridContainer>
+            <f:layout>
+                <f:GridContainerSettings
+                    columns="5"
+                    columnSize="20%"
+                />
+            </f:layout>
+            <HBox>
+                <layoutData>
+                    <f:GridContainerItemLayoutData columns="1"/>
+                </layoutData>
+                <core:Fragment
+                    fragmentName="com.ndbs.managementplaneui.fragments.cards.KPIsCard"
+                    type="XML"
+                />
+                <VBox>
+                    <layoutData>
+                        <f:GridContainerItemLayoutData columns="2" />
+                    </layoutData>
+                    <core:Fragment
+                        fragmentName="com.ndbs.managementplaneui.fragments.cards.KPIsTable"
+                        type="XML"
+                    />
+                    <core:Fragment
+                        fragmentName="com.ndbs.managementplaneui.fragments.cards.KPIsChart"
+                        type="XML"
+                    />
+                </VBox>
+                <HBox>
+                    <layoutData>
+                        <f:GridContainerItemLayoutData columns="2" />
+                    </layoutData>
+                    <core:Fragment
+                        fragmentName="com.ndbs.managementplaneui.fragments.cards.KPIsList"
+                        type="XML"
+                    />
+                </HBox>
+            </HBox>
+        </f:GridContainer>
     </Page>
 </mvc:View>

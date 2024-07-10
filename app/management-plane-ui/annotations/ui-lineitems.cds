@@ -25,3 +25,17 @@ annotate service.KPIs @(UI: {
         }
     ]
 });
+
+annotate service.VKPIs @(UI: {
+    
+    LineItem       : [
+        {
+            $Type: 'UI.DataField',
+            Value: kpiChapterID  
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: kpiReportDate
+        }
+    ]
+});
