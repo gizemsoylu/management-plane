@@ -7,8 +7,8 @@
   "private": true,
   "dependencies": {
     "@cap-js-community/odata-v2-adapter": "^1.12.11",
+    "@cap-js/postgres": "^1.10.0",
     "@sap/cds": "^7",
-    "@sap/cds-hana": "^2",
     "@sap/xssec": "^3",
     "express": "^4"
   },
@@ -19,25 +19,20 @@
     "@types/chai": "^4.3.16",
     "@types/express": "^4.17.21",
     "@types/node": "^20.14.9",
+    "cds-plugin-ui5": "^0.6.13",
     "eslint": "^9",
-    "rimraf": "^5.0.7",
-    "cds-plugin-ui5": "^0.6.13"
+    "rimraf": "^5.0.7"
   },
   "scripts": {
     "start": "cds-serve",
     "build-ts": "npx tsc",
     "watch-management-plane-ui": "cds watch --open com.ndbs.managementplaneui/index.html?sap-ui-xx-viewCache=false --livereload false",
-    "undeploy": "cf undeploy management-plane --delete-services --delete-service-keys --delete-service-brokers",
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
-    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
-    "hana-deploy":"cds deploy --to hana:management-plane-db-gsoy"
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
   },
   "cds": {
     "requires": {
-      "db": "hana",
-      "auth": "xsuaa",
-      "destinations": true,
-      "html5-repo": true
+      "auth": "xsuaa"
     }
   }
 }

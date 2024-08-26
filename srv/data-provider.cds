@@ -5,7 +5,7 @@ using {
     ReportHistory as DBReportHistory
 } from '../db/data-models';
 
-@requires: 'authenticated-user'
+//@requires: 'authenticated-user'
 service ManagementPlane {
     entity Sections       as projection on DBSections;
     entity Documents      as projection on DBDocuments;

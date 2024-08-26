@@ -3,7 +3,6 @@ ID: management-plane
 description: Management Plane Application.
 version: 1.0.0
 modules:
-
 # ======================== Backend Nodejs Module ==============================
 - name: management-plane-srv
 # =============================================================================
@@ -12,7 +11,7 @@ modules:
   requires:
   - name: management-plane-destination-service
   - name: management-plane-auth
-  - name: management-plane-db
+  - name: postgresql
   provides:
   - name: srv-api
     properties:
@@ -21,6 +20,7 @@ modules:
     buildpack: nodejs_buildpack
     readiness-health-check-http-endpoint: /health
     readiness-health-check-type: http
+    enable-parallel-deployments: true
   build-parameters:
     builder: npm-ci
     ignore: ["default-env.json", ".env", "**/*.ts", "srv/**/*.ts", "srv/lib/**/*.ts"]
@@ -28,12 +28,17 @@ modules:
 # ========================== DB Deployer Module ===============================   
 - name: management-plane-db-deployer
 # =============================================================================
-  type: hdb
-  path: gen/db
+  type: nodejs
+  path: gen/pg
   requires:
-  - name: management-plane-db
+  - name: postgresql
   parameters:
     buildpack: nodejs_buildpack
+    no-route: true
+    no-start: true
+    tasks:
+        - name: deploy-to-postgresql
+          command: npm start
 
 # =============================== Approuter ===================================    
 - name: management-plane-approuter
@@ -90,12 +95,9 @@ modules:
     supported-platforms: []
 resources:
 # =========================== HDI Container ===================================      
-- name: management-plane-db
+- name: postgresql
 # =============================================================================
-  type: com.sap.xs.hdi-container
-  parameters:
-    service: hana
-    service-plan: hdi-shared
+  type: org.cloudfoundry.existing-service
 
 # =========================== XSUAA Service ===================================
 - name: management-plane-auth
